@@ -1,21 +1,20 @@
 import express from 'express'
 import dotenv from 'dotenv'
-import route from './routes/userRoute.js'
+import userRoute from './routes/userRoute.js'
 import mongoose from 'mongoose'
-
+import cookieParser from 'cookie-parser'
 
 const app = express()
 
 app.use(express.json())
+app.use(cookieParser())
 dotenv.config()
 
-
-
 const port = process.env.PORT
-const mongodb_url = (process.env.MONGODB_URL)
+const db = (process.env.MONGODB_URL)
 // const password = process.env.PASSWORD
 
-mongoose.connect(mongodb_url)
+mongoose.connect(db)
 .then(()=>{
     console.log('Database connected successfully')
     app.listen(port, () => {
@@ -26,7 +25,7 @@ mongoose.connect(mongodb_url)
 })
 
 
-app.use('/api/user', route)
+app.use('/api/user', userRoute)
 
 //Try again
 
